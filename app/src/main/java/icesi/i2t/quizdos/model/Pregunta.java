@@ -8,9 +8,9 @@ public class Pregunta {
     public Pregunta() {
     }
 
-    public Pregunta(String enunciado, String[] opciones) {
+    public Pregunta(String enunciado) {
         this.enunciado = enunciado;
-        this.opciones = opciones;
+        this.opciones = new String[4];
     }
 
     public String getEnunciado() {
