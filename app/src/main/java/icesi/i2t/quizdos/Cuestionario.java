@@ -64,14 +64,14 @@ public class Cuestionario extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(radioGroup.getCheckedRadioButtonId()!=-1){
+                if (radioGroup.getCheckedRadioButtonId() != -1) {
                     RadioButton aux = findViewById(radioGroup.getCheckedRadioButtonId());
-                    //enviarBaseDatos(aux);
+                    enviarBaseDatos(contador, aux);
                 }
 
                 contador++;
 
-                if(contador>5) {
+                if (contador > 5) {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(i);
                     finish();
@@ -133,6 +133,32 @@ public class Cuestionario extends AppCompatActivity {
                 radio_dos.setText(p5.getOpcionDos() + "");
                 radio_tres.setText(p5.getOpcionTres() + "");
                 radio_cuatro.setText(p5.getOpcionCuatro() + "");
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void enviarBaseDatos(int i, RadioButton aux) {
+        switch (i) {
+            case 1:
+                if (aux.getText().toString().equals(p1.getOpcionUno())) {
+
+                } else if (aux.getText().toString().equals(p1.getOpcionDos())) {
+
+                } else if (aux.getText().toString().equals(p1.getOpcionTres())) {
+
+                } else if (aux.getText().toString().equals(p1.getOpcionCuatro())) {
+
+                }
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
                 break;
             default:
                 break;
