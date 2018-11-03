@@ -12,14 +12,21 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
+
 import icesi.i2t.quizdos.model.Pregunta;
+import icesi.i2t.quizdos.model.WEBUtilDomi;
 
 public class Cuestionario extends AppCompatActivity {
 
-    public static final String RUTA = "";
+    public static final String PREGUNTA_UNO = "";
+    public static final String PREGUNTA_DOS = "";
+    public static final String PREGUNTA_TRES = "";
+    public static final String PREGUNTA_CUATRO = "";
+    public static final String PREGUNTA_CINCO = "";
 
-    private FirebaseAuth auth;
     private FirebaseDatabase db;
+    private FirebaseAuth auth;
 
     private TextView tv_pregunta;
     private TextView tv_enunciado;
@@ -44,6 +51,9 @@ public class Cuestionario extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cuestionario);
+
+        db = FirebaseDatabase.getInstance();
+        auth = FirebaseAuth.getInstance();
 
         tv_pregunta = findViewById(R.id.tv_pregunta);
         tv_enunciado = findViewById(R.id.tv_enunciado);
@@ -84,81 +94,77 @@ public class Cuestionario extends AppCompatActivity {
     }
 
     private void inicializarPreguntas() {
-        p1 = new Pregunta("bla", "", "", "", "");
-        p2 = new Pregunta("bla", "", "", "", "");
-        p3 = new Pregunta("bla", "", "", "", "");
-        p4 = new Pregunta("bla", "", "", "", "");
-        p5 = new Pregunta("bla", "", "", "", "");
+        p1 = new Pregunta("E1", "O1", "O2", "O3", "O4");
+        p2 = new Pregunta("E2", "O1", "O2", "O3", "O4");
+        p3 = new Pregunta("E3", "O1", "O2", "O3", "O4");
+        p4 = new Pregunta("E4", "O1", "O2", "O3", "O4");
+        p5 = new Pregunta("E5", "O1", "O2", "O3", "O4");
+    }
+
+    private void setTextPreguntasToSwitch(int i, Pregunta p) {
+        tv_pregunta.setText("Pregunta " + i + ":");
+        tv_enunciado.setText(p.getEnunciado() + "");
+        radio_uno.setText(p.getOpcionUno() + "");
+        radio_dos.setText(p.getOpcionDos() + "");
+        radio_tres.setText(p.getOpcionTres() + "");
+        radio_cuatro.setText(p.getOpcionCuatro() + "");
     }
 
     private void cargarPregunta(int i) {
         inicializarPreguntas();
         switch (i) {
             case 1:
-                tv_pregunta.setText("Pregunta " + i + ":");
-                tv_enunciado.setText(p1.getEnunciado() + "");
-                radio_uno.setText(p1.getOpcionUno() + "");
-                radio_dos.setText(p1.getOpcionDos() + "");
-                radio_tres.setText(p1.getOpcionTres() + "");
-                radio_cuatro.setText(p1.getOpcionCuatro() + "");
+                setTextPreguntasToSwitch(i, p1);
                 break;
             case 2:
-                tv_pregunta.setText("Pregunta " + i + ":");
-                tv_enunciado.setText(p2.getEnunciado() + "");
-                radio_uno.setText(p2.getOpcionUno() + "");
-                radio_dos.setText(p2.getOpcionDos() + "");
-                radio_tres.setText(p2.getOpcionTres() + "");
-                radio_cuatro.setText(p2.getOpcionCuatro() + "");
+                setTextPreguntasToSwitch(i, p2);
                 break;
             case 3:
-                tv_pregunta.setText("Pregunta " + i + ":");
-                tv_enunciado.setText(p3.getEnunciado() + "");
-                radio_uno.setText(p3.getOpcionUno() + "");
-                radio_dos.setText(p3.getOpcionDos() + "");
-                radio_tres.setText(p3.getOpcionTres() + "");
-                radio_cuatro.setText(p3.getOpcionCuatro() + "");
+                setTextPreguntasToSwitch(i, p3);
                 break;
             case 4:
-                tv_pregunta.setText("Pregunta " + i + ":");
-                tv_enunciado.setText(p4.getEnunciado() + "");
-                radio_uno.setText(p4.getOpcionUno() + "");
-                radio_dos.setText(p4.getOpcionDos() + "");
-                radio_tres.setText(p4.getOpcionTres() + "");
-                radio_cuatro.setText(p4.getOpcionCuatro() + "");
+                setTextPreguntasToSwitch(i, p4);
                 break;
             case 5:
-                tv_pregunta.setText("Pregunta " + i + ":");
-                tv_enunciado.setText(p5.getEnunciado() + "");
-                radio_uno.setText(p5.getOpcionUno() + "");
-                radio_dos.setText(p5.getOpcionDos() + "");
-                radio_tres.setText(p5.getOpcionTres() + "");
-                radio_cuatro.setText(p5.getOpcionCuatro() + "");
+                setTextPreguntasToSwitch(i, p5);
                 break;
             default:
                 break;
         }
     }
 
-    public void enviarBaseDatos(int i, RadioButton aux) {
+    public void compareToEnviarBD(int i, final RadioButton aux, Pregunta p, final String ruta) {
+        if (aux.getText().toString().equals(p.getOpcionUno()) || aux.getText().toString().equals(p.getOpcionDos()) || aux.getText().toString().equals(p.getOpcionTres()) || aux.getText().toString().equals(p.getOpcionCuatro())) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Gson g = new Gson();
+                        WEBUtilDomi.JsonByPOSTrequest(ruta, g.toJson(aux.getText().toString()));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
+    }
+
+    public void enviarBaseDatos(int i, final RadioButton aux) {
         switch (i) {
             case 1:
-                if (aux.getText().toString().equals(p1.getOpcionUno())) {
-
-                } else if (aux.getText().toString().equals(p1.getOpcionDos())) {
-
-                } else if (aux.getText().toString().equals(p1.getOpcionTres())) {
-
-                } else if (aux.getText().toString().equals(p1.getOpcionCuatro())) {
-
-                }
+                compareToEnviarBD(i, aux, p1, PREGUNTA_UNO);
                 break;
             case 2:
+                compareToEnviarBD(i, aux, p2, PREGUNTA_DOS);
                 break;
             case 3:
+                compareToEnviarBD(i, aux, p3, PREGUNTA_TRES);
                 break;
             case 4:
+                compareToEnviarBD(i, aux, p4, PREGUNTA_CUATRO);
                 break;
             case 5:
+                compareToEnviarBD(i, aux, p5, PREGUNTA_CINCO);
                 break;
             default:
                 break;
