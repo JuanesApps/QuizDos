@@ -5,7 +5,8 @@
     android:layout_marginLeft="40dp"
     android:layout_marginRight="40dp"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorFondo">
 
     <Button
         android:id="@+id/btn_cuestionario"
@@ -21,7 +22,7 @@
         android:id="@+id/btn_estadisticas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="80dp"
         android:background="@drawable/btn"
         android:text="Ver Estadisticas"
         android:textAlignment="center"

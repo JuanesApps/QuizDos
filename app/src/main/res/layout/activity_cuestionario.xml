@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="40dp"
     android:layout_marginRight="40dp"
+    android:background="@color/colorFondo"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -16,14 +17,14 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_pregunta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:text="Pregunta 1"
             android:textAlignment="center"
             android:textColor="#000"
-            android:textSize="18sp"
-            android:id="@+id/tv_pregunta"/>
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tv_enunciado"
@@ -41,40 +42,40 @@
             android:layout_height="wrap_content">
 
             <RadioButton
+                android:id="@+id/radio_uno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textAlignment="center"
                 android:textColor="#000"
-                android:textSize="18sp"
-                android:id="@+id/radio_uno"/>
+                android:textSize="18sp" />
 
             <RadioButton
+                android:id="@+id/radio_dos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textAlignment="center"
                 android:textColor="#000"
-                android:textSize="18sp"
-                android:id="@+id/radio_dos"/>
+                android:textSize="18sp" />
 
             <RadioButton
+                android:id="@+id/radio_tres"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textAlignment="center"
                 android:textColor="#000"
-                android:textSize="18sp"
-                android:id="@+id/radio_tres"/>
+                android:textSize="18sp" />
 
             <RadioButton
+                android:id="@+id/radio_cuatro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textAlignment="center"
                 android:textColor="#000"
-                android:textSize="18sp"
-                android:id="@+id/radio_cuatro"/>
+                android:textSize="18sp" />
         </RadioGroup>
 
     </LinearLayout>

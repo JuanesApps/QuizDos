@@ -20,11 +20,11 @@ import icesi.i2t.quizdos.model.WEBUtilDomi;
 
 public class Cuestionario extends AppCompatActivity {
 
-    public static final String PREGUNTA_UNO = "";
-    public static final String PREGUNTA_DOS = "";
-    public static final String PREGUNTA_TRES = "";
-    public static final String PREGUNTA_CUATRO = "";
-    public static final String PREGUNTA_CINCO = "";
+    public static final String PREGUNTA_UNO = "/PreguntaUno";
+    public static final String PREGUNTA_DOS = "/PreguntaDos";
+    public static final String PREGUNTA_TRES = "/PreguntaTres";
+    public static final String PREGUNTA_CUATRO = "/PreguntaCuatro";
+    public static final String PREGUNTA_CINCO = "/PreguntaCinco";
 
     private FirebaseDatabase db;
     private FirebaseAuth auth;
@@ -53,8 +53,8 @@ public class Cuestionario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cuestionario);
 
-        db = FirebaseDatabase.getInstance();
-        auth = FirebaseAuth.getInstance();
+        //db = FirebaseDatabase.getInstance(); //Falta inicializar
+        //auth = FirebaseAuth.getInstance();
 
         tv_pregunta = findViewById(R.id.tv_pregunta);
         tv_enunciado = findViewById(R.id.tv_enunciado);
@@ -83,6 +83,7 @@ public class Cuestionario extends AppCompatActivity {
                 contador++;
 
                 if (contador > 5) {
+                    btn_enviar.setText("Enviar");
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(i);
                     finish();

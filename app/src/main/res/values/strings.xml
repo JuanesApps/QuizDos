@@ -5,11 +5,11 @@
     <!--Para el Spinner-->
     <string-array name="preguntas">
         <item>-</item>
-        <item>Pregunta 1</item>
-        <item>Pregunta 2</item>
-        <item>Pregunta 3</item>
-        <item>Pregunta 4</item>
-        <item>Pregunta 5</item>
+        <item> Pregunta 1 </item>
+        <item> Pregunta 2 </item>
+        <item> Pregunta 3 </item>
+        <item> Pregunta 4 </item>
+        <item> Pregunta 5 </item>
     </string-array>
 
 </resources>
