@@ -8,6 +8,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Estadisticas extends AppCompatActivity {
 
     private Spinner spinner_preguntas;
@@ -35,5 +43,19 @@ public class Estadisticas extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void setupPieChart(){
+        // Popultaing a list of PieEntries
+        List<PieEntry> pieEntries = new ArrayList<>();
+        //pieEntries.add(valor,nombre);
+        PieDataSet dataSet = new PieDataSet(pieEntries, "Label");
+        //dataSet.setColor();
+        PieData data = new PieData(dataSet);
+        // Get the chart
+        PieChart chart = findViewById(R.id.chart);
+        chart.setData(data);
+        chart.animateY(1000);
+        chart.invalidate();
     }
 }

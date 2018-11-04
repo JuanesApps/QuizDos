@@ -4,17 +4,26 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="40dp"
     android:layout_marginRight="40dp"
-    android:background="@color/colorFondo"
+    android:background="#ffffff"
     android:gravity="center"
     android:orientation="vertical">
 
     <Spinner
         android:id="@+id/spinner_preguntas"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@color/colorPrimary"
         android:textAlignment="center">
 
     </Spinner>
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/chart">
+
+    </com.github.mikephil.charting.charts.PieChart>
 
 </LinearLayout>

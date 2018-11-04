@@ -6,7 +6,7 @@
     android:layout_marginRight="40dp"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="@color/colorFondo">
+    android:background="#ffffff">
 
     <Button
         android:id="@+id/btn_cuestionario"
