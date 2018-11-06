@@ -1,6 +1,8 @@
 package icesi.i2t.quizdos;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +12,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
@@ -20,11 +26,11 @@ import icesi.i2t.quizdos.model.WEBUtilDomi;
 
 public class Cuestionario extends AppCompatActivity {
 
-    public static final String PREGUNTA_UNO = "https://quizdos-e269.firebaseio.com/PreguntaUno";
-    public static final String PREGUNTA_DOS = "https://quizdos-e269.firebaseio.com/PreguntaDos";
-    public static final String PREGUNTA_TRES = "https://quizdos-e269.firebaseio.com/PreguntaTres";
-    public static final String PREGUNTA_CUATRO = "https://quizdos-e269.firebaseio.com/PreguntaCuatro";
-    public static final String PREGUNTA_CINCO = "https://quizdos-e269.firebaseio.com/PreguntaCinco";
+    public static final String PREGUNTA_UNO = "https://quizdos-e269b.firebaseio.com/Pregunta1.json";
+    public static final String PREGUNTA_DOS = "https://quizdos-e269b.firebaseio.com/Pregunta2.json";
+    public static final String PREGUNTA_TRES = "https://quizdos-e269b.firebaseio.com/Pregunta3.json";
+    public static final String PREGUNTA_CUATRO = "https://quizdos-e269b.firebaseio.com/Pregunta4.json";
+    public static final String PREGUNTA_CINCO = "https://quizdos-e269b.firebaseio.com/Pregunta5.json";
 
     private FirebaseDatabase db;
     private FirebaseAuth auth;
@@ -48,13 +54,19 @@ public class Cuestionario extends AppCompatActivity {
 
     private int contador;
 
+    private DatabaseReference pregunta_uno_ref;
+    private DatabaseReference pregunta_dos_ref;
+    private DatabaseReference pregunta_tres_ref;
+    private DatabaseReference pregunta_cuatro_ref;
+    private DatabaseReference pregunta_cinco_ref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cuestionario);
 
-        //db = FirebaseDatabase.getInstance(); //Falta inicializar
-        //auth = FirebaseAuth.getInstance();
+     //   auth = FirebaseAuth.getInstance();
+       // db = FirebaseDatabase.getInstance(); //Falta inicializar
 
         tv_pregunta = findViewById(R.id.tv_pregunta);
         tv_enunciado = findViewById(R.id.tv_enunciado);
@@ -71,6 +83,12 @@ public class Cuestionario extends AppCompatActivity {
 
         cargarPregunta(contador);
 
+       // pregunta_uno_ref = db.getReference().child("Pregunta 1");
+       // pregunta_dos_ref = db.getReference().child("Pregunta 2");
+       // pregunta_tres_ref = db.getReference().child("Pregunta 3");
+       // pregunta_cuatro_ref = db.getReference().child("Pregunta 4");
+       // pregunta_cinco_ref = db.getReference().child("Pregunta 5");
+
         btn_enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,8 +100,11 @@ public class Cuestionario extends AppCompatActivity {
 
                 contador++;
 
-                if (contador > 5) {
+                if(contador==5){
                     btn_enviar.setText("Enviar");
+                }
+
+                if (contador > 5) {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(i);
                     finish();
@@ -137,6 +158,7 @@ public class Cuestionario extends AppCompatActivity {
 
     public void compareToEnviarBD(int i, final RadioButton aux, Pregunta p, final String ruta) {
         if (aux.getText().toString().equals(p.getOpcionUno()) || aux.getText().toString().equals(p.getOpcionDos()) || aux.getText().toString().equals(p.getOpcionTres()) || aux.getText().toString().equals(p.getOpcionCuatro())) {
+           // pregunta_uno_ref.setValue(aux.getText().toString());
             new Thread(new Runnable() {
                 @Override
                 public void run() {
