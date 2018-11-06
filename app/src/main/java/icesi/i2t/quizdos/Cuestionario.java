@@ -20,11 +20,11 @@ import icesi.i2t.quizdos.model.WEBUtilDomi;
 
 public class Cuestionario extends AppCompatActivity {
 
-    public static final String PREGUNTA_UNO = "/PreguntaUno";
-    public static final String PREGUNTA_DOS = "/PreguntaDos";
-    public static final String PREGUNTA_TRES = "/PreguntaTres";
-    public static final String PREGUNTA_CUATRO = "/PreguntaCuatro";
-    public static final String PREGUNTA_CINCO = "/PreguntaCinco";
+    public static final String PREGUNTA_UNO = "https://quizdos-e269.firebaseio.com/PreguntaUno";
+    public static final String PREGUNTA_DOS = "https://quizdos-e269.firebaseio.com/PreguntaDos";
+    public static final String PREGUNTA_TRES = "https://quizdos-e269.firebaseio.com/PreguntaTres";
+    public static final String PREGUNTA_CUATRO = "https://quizdos-e269.firebaseio.com/PreguntaCuatro";
+    public static final String PREGUNTA_CINCO = "https://quizdos-e269.firebaseio.com/PreguntaCinco";
 
     private FirebaseDatabase db;
     private FirebaseAuth auth;

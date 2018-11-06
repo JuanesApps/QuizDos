@@ -45,10 +45,14 @@ public class Estadisticas extends AppCompatActivity {
         });
     }
 
+    // https://github.com/PhilJay/MPAndroidChart
+    // https://material.io/tools/color/#!/?view.left=0&view.right=0&primary.color=2196F3
     private void setupPieChart(){
         // Popultaing a list of PieEntries
         List<PieEntry> pieEntries = new ArrayList<>();
         //pieEntries.add(valor,nombre);
+        pieEntries.add(new PieEntry( 5*100/25,"0"));
+        pieEntries.add(new PieEntry( 20*100/25,"1"));
         PieDataSet dataSet = new PieDataSet(pieEntries, "Label");
         //dataSet.setColor();
         PieData data = new PieData(dataSet);
