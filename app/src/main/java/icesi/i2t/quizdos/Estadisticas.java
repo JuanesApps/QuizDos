@@ -1,5 +1,6 @@
 package icesi.i2t.quizdos;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +33,8 @@ public class Estadisticas extends AppCompatActivity {
     private Spinner spinner_preguntas;
     private ArrayAdapter<CharSequence> adapter;
 
+    private String itemSeleccionado;
+
     private int opcionA;
     private int opcionB;
     private int opcionC;
@@ -48,12 +51,19 @@ public class Estadisticas extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_preguntas.setAdapter(adapter);
 
+        itemSeleccionado = "";
+
+        opcionA = 0;
+        opcionB = 0;
+        opcionC = 0;
+        opcionD = 0;
+        totalOpciones = 0;
+
         spinner_preguntas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String texto = parent.getItemAtPosition(position).toString();
-                compareToEnviarBD(Cuestionario.PREGUNTA_UNO);
-                Toast.makeText(parent.getContext(), texto, Toast.LENGTH_SHORT).show();
+                itemSeleccionado = parent.getItemAtPosition(position).toString();
+                //Toast.makeText(parent.getContext(), texto, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -61,19 +71,50 @@ public class Estadisticas extends AppCompatActivity {
 
             }
         });
-        setupPieChart();
+        switchPieChart(itemSeleccionado);
+    }
+
+    private void switchPieChart(String spinner){
+        switch (spinner) {
+            case "Pregunta 1":
+                extraerInfoByDB(Cuestionario.PREGUNTA_UNO);
+                setupPieChart(spinner);
+                break;
+            case "Pregunta 2":
+                extraerInfoByDB(Cuestionario.PREGUNTA_DOS);
+                setupPieChart(spinner);
+                break;
+            case "Pregunta 3":
+                extraerInfoByDB(Cuestionario.PREGUNTA_TRES);
+                setupPieChart(spinner);
+                break;
+            case "Pregunta 4":
+                extraerInfoByDB(Cuestionario.PREGUNTA_CUATRO);
+                setupPieChart(spinner);
+                break;
+            case "Pregunta 5":
+                extraerInfoByDB(Cuestionario.PREGUNTA_CINCO);
+                setupPieChart(spinner);
+                break;
+            default:
+                break;
+        }
     }
 
     // https://github.com/PhilJay/MPAndroidChart
     // https://material.io/tools/color/#!/?view.left=0&view.right=0&primary.color=2196F3
-    private void setupPieChart() {
+    private void setupPieChart(String spinner) {
+
         // Popultaing a list of PieEntries
         List<PieEntry> pieEntries = new ArrayList<>();
         //pieEntries.add(valor,nombre);
-        pieEntries.add(new PieEntry(5 * 100 / 25, "0"));
-        pieEntries.add(new PieEntry(20 * 100 / 25, "1"));
-        PieDataSet dataSet = new PieDataSet(pieEntries, "Label");
-        //dataSet.setColor();
+        pieEntries.add(new PieEntry(opcionA * 100 / totalOpciones, "A"));
+        pieEntries.add(new PieEntry(opcionB * 100 / totalOpciones, "B"));
+        pieEntries.add(new PieEntry(opcionC * 100 / totalOpciones, "C"));
+        pieEntries.add(new PieEntry(opcionD * 100 / totalOpciones, "D"));
+
+        PieDataSet dataSet = new PieDataSet(pieEntries, spinner);
+        dataSet.setColor(Color.GREEN);
         PieData data = new PieData(dataSet);
         // Get the chart
         PieChart chart = findViewById(R.id.chart);
@@ -82,29 +123,7 @@ public class Estadisticas extends AppCompatActivity {
         chart.invalidate();
     }
 
-    public void extraerInfoByBD(int i, final RadioButton aux) {
-        switch (i) {
-            case 1:
-                compareToEnviarBD(Cuestionario.PREGUNTA_UNO);
-                break;
-            case 2:
-                compareToEnviarBD(Cuestionario.PREGUNTA_DOS);
-                break;
-            case 3:
-                compareToEnviarBD(Cuestionario.PREGUNTA_TRES);
-                break;
-            case 4:
-                compareToEnviarBD(Cuestionario.PREGUNTA_CUATRO);
-                break;
-            case 5:
-                compareToEnviarBD(Cuestionario.PREGUNTA_CINCO);
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void compareToEnviarBD(final String ruta) {
+    public void extraerInfoByDB(final String ruta) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -120,14 +139,14 @@ public class Estadisticas extends AppCompatActivity {
                     Object[] objeto = opciones.toArray();
                     for (int i = 0; i < objeto.length; i++) {
                         String auxOpciones = objeto[i].toString();
-                        Log.e(">>>", "Holi:" + auxOpciones);
-                        if (auxOpciones == "O1") {
+                        //Log.e(">>>", "Holi:" + auxOpciones);
+                        if (auxOpciones.equals("O1")) {
                             opcionA++;
-                        } else if (auxOpciones == "O2") {
+                        } else if (auxOpciones.equals("O2")) {
                             opcionB++;
-                        } else if (auxOpciones == "O3") {
+                        } else if (auxOpciones.equals("O3")) {
                             opcionC++;
-                        } else if (auxOpciones == "O4") {
+                        } else if (auxOpciones.equals("O4")) {
                             opcionD++;
                         }
                         totalOpciones++;
